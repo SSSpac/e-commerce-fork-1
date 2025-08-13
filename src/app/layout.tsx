@@ -30,8 +30,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <CartProvider>
+          <section className="relative">
+            <div className="sticky top-4 z-50">
           <Header />
+          </div>
+          <div className="h-[30vh]" />
+          </section>
+          <main className="-mt-40">
           {children}
+          </main>
         </CartProvider>
       </body>
     </html>

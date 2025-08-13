@@ -14,11 +14,11 @@ export default function ProductCard({ name, price, imageUrl }: ProductCardProps)
      
      <img src={imageUrl} alt={name} className="w-full aspect-square object-cover mb-4 rounded" />
       
-      <h3 className="text-xl font-semibold mb-2">{name}</h3>
+      <h3 className="text-xl font-semibold mb-2 text-black">{name}</h3>
 
       <p className="text-lg text-gray-700 mb-4">${price.toFixed(2)}</p>
       
-      <button onClick={() => addToCart({ name, price, imageUrl })} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+      <button onClick={() => addToCart({ name, price, imageUrl })} className="bg-black text-white py-2 px-4 rounded hover:bg-blue-600">
         Add to Cart
       </button>
     </div>
