@@ -26,6 +26,26 @@ export default function HomePage() {
           price={79.99} 
           imageUrl="/images/backpack4.png" 
         />
+                <ProductCard 
+          name="Sneaker Pro" 
+          price={120.00} 
+          imageUrl="/images/shoe1.png" 
+        />
+        <ProductCard 
+          name="Classic Sneaker" 
+          price={155.00} 
+          imageUrl="/images/shoe2.png" 
+        />
+        <ProductCard 
+          name="Space Speedsters" 
+          price={189.99} 
+          imageUrl="/images/shoe3.png" 
+        />
+        <ProductCard 
+          name="Air Gordons" 
+          price={85.00} 
+          imageUrl="/images/shoe4.png" 
+        />
       </div>
     </main>
   );
