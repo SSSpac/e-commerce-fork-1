@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
+import SideBar from '../SideBar';
 
 export default function Header() {
   return (
@@ -11,12 +12,7 @@ export default function Header() {
           </Link>
 
           <div className="flex items-center space-x-6">
-            <Link href="/cart" className="hover:text-emerald-300">
-              <ShoppingBagIcon className="h-7 w-7" />
-            </Link>
-            <Link href="/checkout" className="hover:text-white">
-              Checkout
-            </Link>
+              <SideBar/>
           </div>
         </div>
       </nav>
