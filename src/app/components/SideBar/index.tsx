@@ -91,7 +91,7 @@ export default function SideBar() {
         <footer className="border-t px-4 py-3 space-y-3">
           <div className="flex items-center justify-between">
             <span className="font-semibold text-black">Total</span>
-            <span className="font-semibold text-black">${total.toFixed(2)}</span>
+            <span className="font-semibold ">${total.toFixed(2)}</span>
           </div>
           <div className="flex gap-2">
           
