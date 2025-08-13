@@ -2,7 +2,7 @@
 
 import {createContext, useContext, useEffect, useState, ReactNode} from 'react';
 
-export type CartItem = {name: string; price: number; imageUrl: string};
+export type CartItem = {id: number; name: string; price: number; imageUrl: string};
 
 type CartContextType = {
     cartItems: CartItem[];
