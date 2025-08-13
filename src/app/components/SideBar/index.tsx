@@ -71,16 +71,16 @@ export default function SideBar() {
                       className="w-14 h-14 object-cover rounded"
                     />
                     <div>
-                      <p className="font-medium text-black">{item.name}</p>
+                      <p className="text-sm font-medium text-black">{item.name}</p>
                       <p className="text-sm text-black">${item.price.toFixed(2)}</p>
                     </div>
                   </div>
 
                   <button
                     onClick={() => removeFromCart(item.name)}
-                    className="text-sm bg-red-600 text-white px-3 py-1 rounded hover:opacity-90 transition"
+                    className="text-sm bg-black text-white px-3 py-1 rounded hover:opacity-90 transition cursor-pointer"
                   >
-                    Remove
+                    X
                   </button>
                 </li>
               ))}
@@ -95,7 +95,7 @@ export default function SideBar() {
           </div>
           <div className="flex gap-2">
           
-            <button className="flex-1 bg-blue-600 text-white py-2 rounded hover:opacity-90 transition">
+            <button className="flex-1 bg-blue-600 text-white py-2 rounded hover:opacity-90 transition cursor-pointer">
               Checkout
             </button>
           </div>
