@@ -1,3 +1,5 @@
+'use client';
+import { useCart } from "@/app/providers/CartProvider";
 
 interface ProductCardProps {
   name: string;
@@ -6,6 +8,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ name, price, imageUrl }: ProductCardProps) {
+  const {addToCart} = useCart();
   return (
     <div className="border rounded-lg p-4 max-w-xs text-center m-2 shadow-md">
      
@@ -15,7 +18,7 @@ export default function ProductCard({ name, price, imageUrl }: ProductCardProps)
 
       <p className="text-lg text-gray-700 mb-4">${price.toFixed(2)}</p>
       
-      <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+      <button onClick={() => addToCart({ name, price, imageUrl })} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
         Add to Cart
       </button>
     </div>
