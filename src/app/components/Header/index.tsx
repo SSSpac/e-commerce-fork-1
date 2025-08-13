@@ -3,7 +3,7 @@ import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
   return (
-    <header className="bg-gray-800 text-gray-200 shadow-lg">
+    <header className="bg-white text-gray-200 shadow-lg">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold hover:text-white">
