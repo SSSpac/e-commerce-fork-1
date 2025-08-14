@@ -23,16 +23,21 @@ export default function SideBar() {
     <>
       
       <button
-        onClick={() => setIsOpen(true)}>
+        onClick={() => setIsOpen(true)} className="relative inline-flex flex-col items-center" 
+        aria-label="Open cart">
+
+      <div className="relative inline-block">
         <ShoppingBagIcon className="h-7 w-7 text-black hover:text-gray-400 cursor-pointer" />
+
         {cartItems.length > 0 && (
-          <span className="absolute top-4 right-8 bg-black text-white text-xs rounded-full px-1.5 py-0.5 z-10">
+          <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] leading-none rounded-full px-1.5 py-0.5">
             {cartItems.length}
           </span>
         )}
+        </div>
 
         {total > 0 && (
-          <span className="absolute left-1/2 -bottom-5 transform -translate-x-1/2 text-xs font-medium text-black">
+          <span className="mt-1 text-xs font-semibold font-medium text-black">
             ${total.toFixed(2)}
           </span>
         )}
