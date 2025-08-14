@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/jest": "15.4.6",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.4",
@@ -31,9 +32,9 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "@next/jest": "15.4.6",
-    "ts-node": "^10.9.2"
+
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
 
   }
 }
