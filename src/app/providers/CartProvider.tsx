@@ -1,16 +1,10 @@
 'use client';
 import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
-
-
-import {createContext, useContext, useEffect, useState, ReactNode} from 'react';
 
 
 
 
-
-
-export type CartItem = { id: name: string; price: number; imageUrl: string; qty: number };
+export type CartItem = { id: number; name: string; price: number; imageUrl: string; qty: number };
 type CartContextType = {
   cartItems: CartItem[];
   addToCart: (item: Omit<CartItem, 'qty'>) => void;
