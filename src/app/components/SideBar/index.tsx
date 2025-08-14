@@ -30,6 +30,13 @@ export default function SideBar() {
             {cartItems.length}
           </span>
         )}
+
+        {total > 0 && (
+          <span className="absolute left-1/2 -bottom-5 transform -translate-x-1/2 text-xs font-medium text-black">
+            ${total.toFixed(2)}
+          </span>
+        )}
+        
       </button>
 
       <div
