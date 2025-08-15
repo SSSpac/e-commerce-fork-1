@@ -1,16 +1,21 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { useCart } from '@/app/providers/CartProvider';
+import { useCart } from '@/app/components/providers/CartProvider';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
   const { cartItems, removeFromCart, clearCart } = useCart();
-
-
+  const [isConfirming, setIsConfirming] = useState(false);
   const total = cartItems.reduce((sum, i) => sum + i.price, 0);
 
-  
+  const handleClearCart = () => {
+    clearCart();
+    setIsConfirming(false);
+  };
+
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') setIsOpen(false);
@@ -21,19 +26,19 @@ export default function SideBar() {
 
   return (
     <>
-      
+
       <button
-        onClick={() => setIsOpen(true)} className="relative inline-flex flex-col items-center" 
+        onClick={() => setIsOpen(true)} className="relative inline-flex flex-col items-center"
         aria-label="Open cart">
 
-      <div className="relative inline-block">
-        <ShoppingBagIcon className="h-7 w-7 text-black hover:text-gray-400 cursor-pointer" />
+        <div className="relative inline-block">
+          <ShoppingBagIcon className="h-7 w-7 text-black hover:text-gray-400 cursor-pointer" />
 
-        {cartItems.length > 0 && (
-          <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] leading-none rounded-full px-1.5 py-0.5">
-            {cartItems.length}
-          </span>
-        )}
+          {cartItems.length > 0 && (
+            <span className="absolute -top-1 -right-1 bg-black text-white text-[10px] leading-none rounded-full px-1.5 py-0.5">
+              {cartItems.length}
+            </span>
+          )}
         </div>
 
         {total > 0 && (
@@ -41,14 +46,13 @@ export default function SideBar() {
             ${total.toFixed(2)}
           </span>
         )}
-        
+
       </button>
 
       <div
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
       />
 
       <aside
@@ -106,13 +110,44 @@ export default function SideBar() {
             <span className="font-semibold ">${total.toFixed(2)}</span>
           </div>
           <div className="flex gap-2">
-          
-            <button className="flex-1 bg-blue-600 text-white py-2 rounded hover:opacity-90 transition cursor-pointer">
-              Checkout
-            </button>
+             {cartItems.length > 0 && (
+              <button
+                onClick={() => setIsConfirming(true)} 
+                className="flex-1 bg-gray-200 text-black py-2 rounded hover:bg-gray-300 transition cursor-pointer"
+              >
+                Clear Cart
+              </button>
+            )}
+            <Link href="/checkout" className="flex-1">
+              <button className="w-full bg-blue-600 text-white py-2 rounded hover:opacity-90 transition cursor-pointer">
+                Checkout
+              </button>
+            </Link>
           </div>
         </footer>
       </aside>
+      {isConfirming && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-30">
+          <div className="bg-white p-6 rounded shadow-lg max-w-sm w-full">
+            <h3 className="text-lg font-semibold mb-4">Are you sure?</h3>
+            <p className="text-sm text-gray-700 mb-6">Do you really want to clear your cart?</p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setIsConfirming(false)}
+                className="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleClearCart}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+              >
+                Clear Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

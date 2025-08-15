@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useMemo, useState, ReactNode } fr
 
 
 export type CartItem = { id: number; name: string; price: number; imageUrl: string; qty: number };
+
 type CartContextType = {
   cartItems: CartItem[];
   addToCart: (item: Omit<CartItem, 'qty'>) => void;

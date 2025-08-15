@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import React from "react";
-import CartProvider from "./providers/CartProvider";
+import CartProvider from "./components/providers/CartProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,12 +32,12 @@ export default function RootLayout({
         <CartProvider>
           <section className="relative">
             <div className="sticky top-4 z-50">
-          <Header />
-          </div>
-          <div className="h-[30vh]" />
+              <Header />
+            </div>
+            <div className="h-[30vh]" />
           </section>
           <main className="-mt-40">
-          {children}
+            {children}
           </main>
         </CartProvider>
       </body>
