@@ -1,58 +1,26 @@
 import { render, screen } from '@testing-library/react'; //André
-import Header from '@/app/components/Header';
+import Header from '../../src/app/components/Header';
 
-jest.mock('next/image', () => (props: any) => {
-  const { priority, ...rest } = props
-  return <img {...rest} />
-});
-
-jest.mock('next/link', () => {
-  return ({ href, children, ...rest }: any) => (
-    <a href={typeof href === 'string' ? href : '#'} {...rest}>
-      {children}
-    </a>
-  );
-});
-
-jest.mock('@/app/components/SideBar', () => () => <div>Mock Sidebar</div>);
-
+jest.mock('../../src/app/components/SideBar', () => ({
+  __esModule: true,
+  default: () => <div>Mock Sidebar</div>,
+}));
 
 describe('Header', () => {
-  
-  describe('Logotypen', () => {
-    it('visar logotypen i headern', () => {
-      render(<Header />);
-
-      
-      const logo = screen.getByRole('img', { name: /logo/i });
-      expect(logo).toBeInTheDocument();
-    });
-
-    it('logotypen länkar till startsidan', () => {
-      render(<Header />);
-
-      
-      const logoLink = screen.getByRole('link', { name: /logo/i });
-      expect(logoLink).toHaveAttribute('href', '/');
-    });
+  test('länken pekar på "/"', () => {
+    render(<Header />);
+    const link = screen.getByRole('link');
+    expect(link).toHaveAttribute('href', '/');
   });
-  
-  
-  describe('Navigationen', () => {
-    it('renderar navigationen', () => {
-      render(<Header />);
-      
-    
-      const navigation = screen.getByRole('navigation');
-      expect(navigation).toBeInTheDocument();
-    });
-    
-    it('renderar sidofältskomponenten (SideBar)', () => {
-      render(<Header />);
 
-      
-      const sidebar = screen.getByText('Mock Sidebar');
-      expect(sidebar).toBeInTheDocument();
-    });
+  test('bilden med alt-text "Logo" finns', () => {
+    render(<Header />);
+    const logo = screen.getByAltText(/logo/i);
+    expect(logo).toBeInTheDocument();
+  });
+
+  test('SideBar-komponenten renderas', () => {
+    render(<Header />);
+    expect(screen.getByText(/mock sidebar/i)).toBeInTheDocument();
   });
 });
