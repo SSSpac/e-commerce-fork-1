@@ -1,4 +1,4 @@
-import React from "react";  //André
+import React from "react"; // André
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
@@ -28,7 +28,25 @@ describe("<ProductCard />", () => {
     jest.useRealTimers();
   });
 
-  it("renderar namn, pris och bild", () => {
+  it("does not show 'Added!' before interaction and supports Enter on the button", async () => {
+    const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
+    render(<ProductCard {...baseProps} />);
+
+    expect(screen.queryByRole("button", { name: /added!/i })).not.toBeInTheDocument();
+
+    const btn = screen.getByRole("button", { name: /add to cart/i });
+    btn.focus();
+    await user.keyboard("{Enter}");
+    expect(screen.getByRole("button", { name: /added!/i })).toBeInTheDocument();
+
+    await act(async () => {
+      jest.advanceTimersByTime(1500);
+    });
+
+    expect(screen.getByRole("button", { name: /add to cart/i })).toBeInTheDocument();
+  });
+
+  it("renders name, price, image, and button", () => {
     render(<ProductCard {...baseProps} />);
     expect(screen.getByRole("heading", { name: /nice hoodie/i })).toBeInTheDocument();
     expect(screen.getByText("$49.99")).toBeInTheDocument();
@@ -36,7 +54,7 @@ describe("<ProductCard />", () => {
     expect(screen.getByRole("button", { name: /add to cart/i })).toBeInTheDocument();
   });
 
-  it("anropar addToCart och växlar 'Added!' → 'Add to Cart' efter 1500ms", async () => {
+  it("calls addToCart and toggles 'Added!' → 'Add to Cart' after 1500ms", async () => {
     const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
 
     render(<ProductCard {...baseProps} />);
