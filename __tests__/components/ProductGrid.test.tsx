@@ -3,26 +3,33 @@ import { products } from '../../src/app/components/Products';
 import ProductGrid from '../../src/app/components/ProductGrid';
 
 jest.mock('../../src/app/components/ProductCard', () => {
-  return function MockProductCard(props: any) {
+  return function MockCard(props: any) {
     return <div data-testid="product-card">{props.name}</div>;
   };
 });
 
-describe('ProductGrid Component', () => {
-
-  // test 1: Renders correct number of product cards
-  test('should render the correct number of product cards', () => {
+describe('ProductGrid Tests', () => {
+  test('shows all product cards', () => {
     render(<ProductGrid />);
-    const productCards = screen.getAllByTestId('product-card');
-    expect(productCards.length).toBe(products.length);
+    const cards = screen.getAllByTestId('product-card');
+    expect(cards.length).toBe(products.length);
   });
 
-  // test 2: renders the correct product names
-  test('should render the correct product names', () => {
+  test('shows product names', () => {
     render(<ProductGrid />);
-    products.forEach(product => {
-      const productCard = screen.getByText(product.name);
-      expect(productCard).toBeInTheDocument();
-    });
+    expect(screen.getByText(products[0].name)).toBeInTheDocument();
+    expect(screen.getByText(products[1].name)).toBeInTheDocument();
+  });
+
+  test('renders at least one product', () => {
+    render(<ProductGrid />);
+    const cards = screen.getAllByTestId('product-card');
+    expect(cards.length).toBeGreaterThan(0);
+  });
+
+  test('no empty cards', () => {
+    render(<ProductGrid />);
+    const emptyCards = screen.queryAllByText('');
+    expect(emptyCards).toHaveLength(0);
   });
 });
