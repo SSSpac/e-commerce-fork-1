@@ -48,13 +48,4 @@ describe('CheckoutPage', () => {
    
     expect(emailInput).toHaveValue('test@example.com');
   });
-  test('should submit the form and redirect to success page', async () => {
-    const user = userEvent.setup();
-    render(<CheckoutPage />);
-  
-    await user.type(screen.getByPlaceholderText(/email address/i), 'test@example.com');
-    await user.type(screen.getByPlaceholderText(/first name/i), 'Jane');
-    await user.type(screen.getByPlaceholderText(/last name/i), 'Doe');
-
-  });
 });

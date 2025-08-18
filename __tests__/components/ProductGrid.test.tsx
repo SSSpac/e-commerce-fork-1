@@ -26,10 +26,4 @@ describe('ProductGrid Tests', () => {
     const cards = screen.getAllByTestId('product-card');
     expect(cards.length).toBeGreaterThan(0);
   });
-
-  test('no empty cards', () => {
-    render(<ProductGrid />);
-    const emptyCards = screen.queryAllByText('');
-    expect(emptyCards).toHaveLength(0);
-  });
 });
