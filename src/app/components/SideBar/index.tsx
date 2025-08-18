@@ -22,10 +22,10 @@ export default function SideBar() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+    }, []);
 
-  return (
-    <>
+    return (
+      <>
 
       <button
         onClick={() => setIsOpen(true)} className="relative inline-flex flex-col items-center"
