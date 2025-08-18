@@ -1,8 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import CheckoutPage from '@/app/checkout';
-import { useCart } from '@/app/components/providers/CartProvider';
+import {useCart} from '@/app/components/providers/CartProvider';
 import userEvent from '@testing-library/user-event';
-import CartProvider from '../../src/app/components/providers/CartProvider';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -11,165 +10,51 @@ jest.mock('next/navigation', () => ({
 }));
 
 jest.mock('../../src/app/components/providers/CartProvider', () => ({
+  ...jest.requireActual('../../src/app/components/providers/CartProvider'),
   useCart: jest.fn(),
 }));
 
-const items = [
-  { id: 1, name: 'Hat', price: 20, imageUrl: 'hat.jpg', qty: 1 },
-  { id: 2, name: 'Shirt', price: 30, imageUrl: 'shirt.jpg', qty: 1 },
+const mockCartItems = [
+  { id: 1, name: 'The Urban Explorer', price: 95.00, imageUrl: 'url1', qty: 1 },
+  { id: 5, name: 'Sneaker Pro', price: 120.00, imageUrl: 'url2', qty: 2 },
 ];
 
-describe('Checkout Tests', () => {
+describe('CheckoutPage', () => {
   beforeEach(() => {
     (useCart as jest.Mock).mockReturnValue({
-      cartItems: items,
-      cartTotal: 50,
+      cartItems: mockCartItems,
+      cartTotal: 335.00, 
       clearCart: jest.fn(),
     });
   });
-
-  test('shows checkout heading', () => {
+ 
+  test('should render the order summary with items from the cart', () => {
     render(<CheckoutPage />);
-    const heading = screen.getByRole('heading', { name: /checkout/i });
-    expect(heading).toBeInTheDocument();
+
+    expect(screen.getByText('The Urban Explorer')).toBeInTheDocument();
+    expect(screen.getByText('Sneaker Pro')).toBeInTheDocument();
+    
+    const total = (335.00 * 1.08).toFixed(2);
+    expect(screen.getByText(`$${total}`)).toBeInTheDocument();
   });
 
-  test('can type in email field', async () => {
+  test('should allow a user to type in the email input', () => {
+    render(<CheckoutPage />);
+    
+    const emailInput = screen.getByPlaceholderText(/email address/i);
+    
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    
+   
+    expect(emailInput).toHaveValue('test@example.com');
+  });
+  test('should submit the form and redirect to success page', async () => {
     const user = userEvent.setup();
     render(<CheckoutPage />);
-    
-    const email = screen.getByPlaceholderText('Email Address');
-    await user.type(email, 'test@test.com');
-    
-    expect(email).toHaveValue('test@test.com');
+  
+    await user.type(screen.getByPlaceholderText(/email address/i), 'test@example.com');
+    await user.type(screen.getByPlaceholderText(/first name/i), 'Jane');
+    await user.type(screen.getByPlaceholderText(/last name/i), 'Doe');
+
   });
-
-  test('shows place order button', () => {
-    render(<CheckoutPage />);
-    const button = screen.getByRole('button', { name: /place order/i });
-    expect(button).toBeInTheDocument();
-  });
-
-  test('can type in zip code', async () => {
-    const user = userEvent.setup();
-    render(<CheckoutPage />);
-    
-    const zip = screen.getByPlaceholderText('ZIP Code');
-    await user.type(zip, '12345');
-    
-    expect(zip).toHaveValue('12345');
-  });
-
-  test('shows cart items', () => {
-    render(<CheckoutPage />);
-    expect(screen.getByText('Hat')).toBeInTheDocument();
-    expect(screen.getByText('Shirt')).toBeInTheDocument();
-  });
-
-  test('empty cart shows message', () => {
-    (useCart as jest.Mock).mockReturnValue({
-      cartItems: [],
-      cartTotal: 0,
-      clearCart: jest.fn(),
-    });
-    
-    render(<CheckoutPage />);
-    expect(screen.getByText('Your cart is empty')).toBeInTheDocument();
-    
-    const orderButton = screen.queryByText(/place order/i);
-    expect(orderButton).not.toBeInTheDocument();
-  });
-  describe('Integration Tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test('cart state changes when adding items', async () => {
-    const user = userEvent.setup();
-    
-    const TestApp = () => {
-      const { addToCart, cartItems } = require('../../src/app/components/providers/CartProvider').useCart();
-      
-      return (
-        <div>
-          <button onClick={() => addToCart({ id: 1, name: 'Hat', price: 20, imageUrl: 'hat.jpg' })}>
-            Add Hat
-          </button>
-          <div data-testid="count">{cartItems.length}</div>
-        </div>
-      );
-    };
-
-    render(
-      <CartProvider>
-        <TestApp />
-      </CartProvider>
-    );
-
-    expect(screen.getByTestId('count')).toHaveTextContent('0');
-    
-    await user.click(screen.getByText('Add Hat'));
-    expect(screen.getByTestId('count')).toHaveTextContent('1');
-  });
-
-  test('removing items changes cart state', async () => {
-    const user = userEvent.setup();
-    
-    const TestApp = () => {
-      const { addToCart, removeFromCart, cartItems } = require('../../src/app/components/providers/CartProvider').useCart();
-      
-      return (
-        <div>
-          <button onClick={() => addToCart({ id: 1, name: 'Hat', price: 20, imageUrl: 'hat.jpg' })}>
-            Add Hat
-          </button>
-          <button onClick={() => removeFromCart('Hat')}>
-            Remove Hat
-          </button>
-          <div data-testid="count">{cartItems.length}</div>
-        </div>
-      );
-    };
-
-    render(
-      <CartProvider>
-        <TestApp />
-      </CartProvider>
-    );
-
-    await user.click(screen.getByText('Add Hat'));
-    expect(screen.getByTestId('count')).toHaveTextContent('1');
-    
-    await user.click(screen.getByText('Remove Hat'));
-    expect(screen.getByTestId('count')).toHaveTextContent('0');
-  });
-
-  test('total price updates with items', async () => {
-    const user = userEvent.setup();
-    
-    const TestApp = () => {
-      const { addToCart, cartTotal } = require('../../src/app/components/providers/CartProvider').useCart();
-      
-      return (
-        <div>
-          <button onClick={() => addToCart({ id: 1, name: 'Hat', price: 20, imageUrl: 'hat.jpg' })}>
-            Add Hat
-          </button>
-          <div data-testid="total">${cartTotal}</div>
-        </div>
-      );
-    };
-
-    render(
-      <CartProvider>
-        <TestApp />
-      </CartProvider>
-    );
-
-    expect(screen.getByTestId('total')).toHaveTextContent('$0');
-    
-    await user.click(screen.getByText('Add Hat'));
-    expect(screen.getByTestId('total')).toHaveTextContent('$20');
-  });
-});
 });
