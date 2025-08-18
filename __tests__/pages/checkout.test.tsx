@@ -1,5 +1,5 @@
 import {render, screen, fireEvent} from '@testing-library/react';
-import CheckoutPage from '@/app/checkout';
+import CheckoutPage from '@/app/checkout/page';
 import {useCart} from '@/app/components/providers/CartProvider';
 import userEvent from '@testing-library/user-event';
 
