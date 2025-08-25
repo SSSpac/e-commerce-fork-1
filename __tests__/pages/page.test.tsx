@@ -8,48 +8,32 @@ jest.mock('../../src/app/components/ProductGrid', () => {
   };
 });
 
-describe('HomePage Tests', () => {
-  test('shows main heading', () => {
+const renderHome = () =>
     render(
       <CartProvider>
         <HomePage />
       </CartProvider>
-    );
+);
 
-    const heading = screen.getByRole('heading', { name: /our products/i });
-    expect(heading).toBeInTheDocument();
-  });
+    describe('HomePage smoke', () => {
+      test("shows main headling", () => {
+        renderHome();
+        expect(screen.getByRole('heading', { name: /our products/i })).toBeInTheDocument();
+      })
 
-  test('shows product grid', () => {
-    render(
-      <CartProvider>
-        <HomePage />
-      </CartProvider>
-    );
+      test("shows product grid placeholder", () => {
+        renderHome();
+        expect(screen.getByTestId('product-grid')).toBeInTheDocument();
+      })
 
-    const grid = screen.getByTestId('product-grid');
-    expect(grid).toBeInTheDocument();
-  });
+      test("has main elemetn", () => {
+        renderHome();
+        expect(screen.getByRole('main')).toBeInTheDocument();
+      })
 
-  test('has main element', () => {
-    render(
-      <CartProvider>
-        <HomePage />
-      </CartProvider>
-    );
+      test("no error text shown", () => {
+        renderHome();
+        expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
+      })
 
-    const main = screen.getByRole('main');
-    expect(main).toBeInTheDocument();
-  });
-
-  test('no error text shown', () => {
-    render(
-      <CartProvider>
-        <HomePage />
-      </CartProvider>
-    );
-
-    const error = screen.queryByText(/error/i);
-    expect(error).not.toBeInTheDocument();
-  });
-});
+    });
