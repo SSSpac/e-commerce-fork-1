@@ -37,8 +37,8 @@ export default function CheckoutPage() {
             setTimeout(() => {
                 clearCart();
                 router.push('/');
-            }, 3000);
-        }, 2000);
+            }, 58_000);
+        }, 2_000);
     };
 
     if (cartItems.length === 0 && !orderComplete) {
