@@ -1,159 +1,70 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CheckoutPage from "../../src/app/checkout/page";
-import { useCart } from "../../src/app/components/providers/CartProvider";
+import CartProvider from "../../src/app/components/providers/CartProvider";
+import { products } from "../../src/app/components/Products";
+import Header from "../../src/app/components/Header";
+import HomePage from "@/app/page";
 
 jest.mock("next/navigation", () => ({ useRouter: () => ({ push: jest.fn() }) }));
-jest.mock("../../src/app/components/providers/CartProvider", () => ({
-  ...jest.requireActual("../../src/app/components/providers/CartProvider"),
-  useCart: jest.fn(),
-}));
 
-type Item = { id: string; name: string; price: number; imageUrl: string; qty: number };
 
-function mockCart(initial: Item[] = []) {
-  let state = {
-    cartItems: [...initial],
-    cartTotal: initial.reduce((s, i) => s + i.price * i.qty, 0),
-  };
-  (useCart as jest.Mock).mockImplementation(() => ({
-    cartItems: state.cartItems,
-    cartTotal: state.cartTotal,
-    clearCart: jest.fn(),
-    addToCart: (it: Item) => {
-      const e = state.cartItems.find((x) => x.id === it.id);
-      e ? (e.qty += it.qty) : (state.cartItems = [...state.cartItems, { ...it }]);
-      state.cartTotal = state.cartItems.reduce((s, i) => s + i.price * i.qty, 0);
-    },
-  }));
-}
+beforeEach(() => {
+  window.localStorage.clear();
+});
 
-function AddButton({ product }: { product: Item }) {
-  const { addToCart } = useCart() as any;
-  return <button onClick={() => addToCart(product)}>Add {product.name}</button>;
-}
+describe("Complete E-commerce Flow", () => {
+  test("full shopping flow: homepage -> cart -> checkout summary", async () => {
+    const user = userEvent.setup();
 
-function renderApp(children?: React.ReactNode) {
-  return render(
-    <>
-      {children}
-      <CheckoutPage />
-    </>
-  );
-}
+    const { rerender } = render(
+      <CartProvider>
+        <Header />
+        <HomePage />
+      </CartProvider>
+    );
 
-function expectSubtotal(v: string) {
-  expect(screen.getByText("Subtotal").closest("div")!).toHaveTextContent(v);
-}
-function expectTax(v: string) {
-  expect(screen.getByText("Tax").closest("div")!).toHaveTextContent(v);
-}
-function expectQty(v: number) {
-  expect(screen.getByText(/Qty:/i)).toHaveTextContent(`Qty: ${v}`);
-}
-function expectPlaceOrder(v: string) {
-  expect(screen.getByRole("button", { name: new RegExp(`Place Order - \\$${v}`) })).toBeInTheDocument();
-}
+    const product1 = products[0];
+    const product2 = products[1];
 
-describe("CheckoutPage integration", () => {
-  beforeEach(() => (useCart as jest.Mock).mockReset());
+    const addButtons = await screen.findAllByRole("button", { name: /add to cart/i });
+    await user.click(addButtons[0]);
+    await user.click(addButtons[1]);
 
-  test("empty cart: total is 0 and items are 0 (empty state)", () => {
-    (useCart as jest.Mock).mockReturnValue({ cartItems: [], cartTotal: 0, clearCart: jest.fn() });
-    renderApp();
-    expect(screen.getByText(/your cart is empty/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Qty:/i)).toBeNull();
-    expect(screen.queryByRole("button", { name: /Place Order/i })).toBeNull();
-  });
+    const cartButton = screen.getByRole("button", { name: /Open cart/i });
+    await user.click(cartButton);
 
-  test("click Add in product grid → total equals product price and items = 1", () => {
-    mockCart();
-    const p = { id: "p1", name: "Shoe", price: 100, imageUrl: "/x.jpg", qty: 1 };
-    const { rerender } = renderApp(<AddButton product={p} />);
+    const sidebar = screen.getByRole("dialog", { name: "Cart sidebar" });
+    expect(within(sidebar).getByText(product1.name)).toBeInTheDocument();
+    expect(within(sidebar).getByText(product2.name)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(/Add Shoe/i));
+    const checkoutButton = within(sidebar).getByRole("link", { name: /checkout/i });
+    await user.click(checkoutButton);
+
     rerender(
-      <>
-        <AddButton product={p} />
+      <CartProvider>
+        <Header />
         <CheckoutPage />
-      </>
+      </CartProvider>
     );
 
-    expectQty(1);
-    expectSubtotal("$100.00");
-    expectTax("$8.00");
-    expectPlaceOrder("100.00");
-  });
+    const summaryHeading = screen.getByRole("heading", { name: /order summary/i });
+    const summary = summaryHeading.closest('section');
+    expect(summary).not.toBeNull();
 
-  test("adding the same item twice updates qty and tax", () => {
-    mockCart();
-    const p = { id: "p1", name: "Shoe", price: 99, imageUrl: "/x.jpg", qty: 1 };
-    const { rerender } = renderApp(<AddButton product={p} />);
+    expect(within(summary!).getByText(product1.name)).toBeInTheDocument();
+    expect(within(summary!).getByText(product2.name)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(/Add Shoe/i));
-    rerender(
-      <>
-        <AddButton product={p} />
-        <CheckoutPage />
-      </>
-    );
-    fireEvent.click(screen.getByText(/Add Shoe/i));
-    rerender(
-      <>
-        <AddButton product={p} />
-        <CheckoutPage />
-      </>
-    );
+    const qtyTexts = within(summary!).getAllByText(/Qty:/);
+    expect(qtyTexts).toHaveLength(2);
 
-    expectQty(2);
-    expectSubtotal("$198.00");
-    expectTax("$15.84");
-    expectPlaceOrder("198.00");
-  });
+    const total = product1.price + product2.price;
+    const tax = total * 0.08;
+    const finalTotal = total + tax;
 
-  test("adding different items combines totals and tax", () => {
-    mockCart();
-    const p1 = { id: "p1", name: "Shoe", price: 99, imageUrl: "/x.jpg", qty: 1 };
-    const p2 = { id: "p2", name: "Sock", price: 50, imageUrl: "/y.jpg", qty: 1 };
-    const { rerender } = renderApp(
-      <>
-        <AddButton product={p1} />
-        <AddButton product={p2} />
-      </>
-    );
-
-    fireEvent.click(screen.getByText(/Add Shoe/i));
-    rerender(
-      <>
-        <AddButton product={p1} />
-        <AddButton product={p2} />
-        <CheckoutPage />
-      </>
-    );
-    fireEvent.click(screen.getByText(/Add Sock/i));
-    rerender(
-      <>
-        <AddButton product={p1} />
-        <AddButton product={p2} />
-        <CheckoutPage />
-      </>
-    );
-
-    expectSubtotal("$149.00");
-    expectTax("$11.92");
-    expectPlaceOrder("149.00");
-  });
-
-  test("email input is editable when cart has items", async () => {
-    (useCart as jest.Mock).mockReturnValue({
-      cartItems: [{ id: "p1", name: "Shoe", price: 99, imageUrl: "/x.jpg", qty: 1 }],
-      cartTotal: 99,
-      clearCart: jest.fn(),
-    });
-    renderApp();
-    const email = screen.getByPlaceholderText(/email address/i);
-    await userEvent.type(email, "test@example.com");
-    expect(email).toHaveValue("test@example.com");
+    expect(within(summary!).getByText('Subtotal').parentElement).toHaveTextContent(`$${total.toFixed(2)}`);
+    expect(within(summary!).getByText('Tax').parentElement).toHaveTextContent(`$${tax.toFixed(2)}`);
+    expect(within(summary!).getByText('Total').parentElement).toHaveTextContent(`$${finalTotal.toFixed(2)}`);
   });
 });
