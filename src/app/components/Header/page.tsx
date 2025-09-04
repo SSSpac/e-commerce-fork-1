@@ -8,7 +8,7 @@ export default function Header() {
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png" // Update with your actual logo path
+            src="/logo.png" 
             alt="Logo"
             width={40}
             height={40}
