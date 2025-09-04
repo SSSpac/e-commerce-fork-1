@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import HomePage from '../../src/app/page';
-import CartProvider from '../../src/app/components/providers/CartProvider';
+import CartProvider from '../../src/app/components/Providers/CartProvider';
 
 jest.mock('../../src/app/components/ProductGrid', () => {
   return function MockProductGrid() {
