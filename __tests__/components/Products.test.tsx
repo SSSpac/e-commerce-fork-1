@@ -1,4 +1,4 @@
-import { products } from '../../src/app/components/Products';
+import { products } from '../../src/app/types/page';
 
 describe('Products Tests', () => {
   test('has unique IDs', () => { 

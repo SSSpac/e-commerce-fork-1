@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import SideBar from "../SideBar";
+import SideBar from "../SideBar/page";
 
 export default function Header() {
   return (

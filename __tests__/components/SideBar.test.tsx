@@ -1,9 +1,9 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SideBar from "../../src/app/components/SideBar";
-import { useCart } from "../../src/app/components/providers/CartProvider";
+import SideBar from "../../src/app/components/SideBar/page";
+import { useCart } from "../../src/app/components/Providers/CartProvider";
 
-jest.mock("../../src/app/components/providers/CartProvider", () => ({
+jest.mock("../../src/app/components/Providers/CartProvider", () => ({
   __esModule: true,
   useCart: jest.fn(),
 }));

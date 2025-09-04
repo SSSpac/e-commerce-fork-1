@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useCart } from "../providers/CartProvider"; 
+import { useCart } from "../Providers/CartProvider"; 
 import Link from "next/link";
 
 export default function SideBar() {

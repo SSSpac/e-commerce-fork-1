@@ -1,5 +1,5 @@
-import { products } from "../Products/page";
-import ProductCard from "../ProductCard";
+import { products } from "../../types/page";
+import ProductCard from "../ProductCard/page";
 
 export default function ProductGrid() {
   return (

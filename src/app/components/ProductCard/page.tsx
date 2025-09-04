@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useCart } from "../providers/CartProvider";
+import { useCart } from "../Providers/CartProvider";
 
 interface Product {
   id: number;
