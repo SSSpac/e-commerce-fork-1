@@ -1,6 +1,6 @@
 // André
 import { render, screen } from "@testing-library/react";
-import Header from "../../src/app/components/Header";
+import Header from "../../src/app/components/Header/page";
 import userEvent from "@testing-library/user-event";
 
 jest.mock("../../src/app/components/SideBar", () => ({
