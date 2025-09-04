@@ -6,7 +6,8 @@ import Link from "next/link";
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { cartItems, removeFromCart, clearCart, total } = useCart();
+  const { cartItems, removeFromCart, clearCart } = useCart();
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function SideBar() {
                         <p className="text-green-600">${item.price.toFixed(2)}</p>
                       </div>
                     </div>
-                    <button onClick={() => removeFromCart(item.id)} className="text-red-500">
+                    <button onClick={() => removeFromCart(String(item.id))} className="text-red-500">
                       Remove
                     </button>
                   </div>

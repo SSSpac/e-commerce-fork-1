@@ -1,5 +1,5 @@
 'use client';
-import { useCart } from "../components/providers/CartProvider";
+import { useCart } from "../../app/components/Providers/CartProvider";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
