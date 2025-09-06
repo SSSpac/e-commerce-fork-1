@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { products } from '../../src/app/types/page';
+import { products } from '../../src/app/data/page';
 import ProductGrid from '../../src/app/components/ProductGrid/page';
 
 jest.mock('../../src/app/components/ProductCard/page', () => {

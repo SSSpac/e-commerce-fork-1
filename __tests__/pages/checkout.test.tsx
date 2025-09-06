@@ -3,7 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CheckoutPage from "../../src/app/checkout/page";
 import CartProvider from "../../src/app/components/Providers/CartProvider";
-import { products } from "../../src/app/types/page";
+import { products } from "../../src/app/data/page";
 import Header from "../../src/app/components/Header/page";
 import HomePage from "@/app/page";
 

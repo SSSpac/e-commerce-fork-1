@@ -8,13 +8,13 @@ export default function Header() {
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png" 
+            src="/images/logo.png"
             alt="Logo"
             width={40}
             height={40}
             className="mr-2"
           />
-          <span className="text-xl font-bold">E-Commerce Store</span>
+          <span className="text-xl text-red-400 font-bold">Commerce Store Originals</span>
         </Link>
         <SideBar />
       </div>

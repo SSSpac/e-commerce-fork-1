@@ -3,7 +3,7 @@ import { act } from "react";
 import userEvent from "@testing-library/user-event";
 import HomePage from "../../src/app/page";
 import CartProvider from "../../src/app/components/Providers/CartProvider";
-import { products } from "../../src/app/types/page";
+import { products } from "../../src/app/data/page";
 
 const renderHome = () =>
   render(
