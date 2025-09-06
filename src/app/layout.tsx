@@ -26,21 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <CartProvider>
-          <section className="relative">
-            <div className="sticky top-4 z-50">
-              <Header />
-            </div>
-            <div className="h-[30vh]" />
-          </section>
-          <main className="-mt-40">
-            {children}
-          </main>
-        </CartProvider>
-      </body>
-    </html>
-  );
+  <html lang="en">
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <CartProvider>
+        <div className="sticky top-0 z-50">
+          <Header />
+        </div>
+        <main className="min-h-screen">
+          {children}
+        </main>
+      </CartProvider>
+    </body>
+  </html>
+);
 }

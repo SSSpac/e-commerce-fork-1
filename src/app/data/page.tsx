@@ -112,91 +112,91 @@ export const products: Product[] = [
     imageUrl: "/images/pants3.png",
     category: "fitness"
   },  {
-    id: 15,
+    id: 16,
     name: "pants Tracker",
     price: 19.99,
     imageUrl: "/images/pants4.png",
     category: "fitness"
   } , 
    {
-    id: 15,
+    id: 17,
     name: "shirt Tracker",
     price: 9.99,
     imageUrl: "/images/shirt1.png",
     category: "fitness"
   },
   {
-    id: 15,
+    id: 18,
     name: "shirt Fitness",
     price: 15.99,
     imageUrl: "/images/shirt2.png",
     category: "fitness"
   },
-     {
-    id: 15,
+  {
+    id: 19,
     name: "shirt pro",
     price: 5.99,
     imageUrl: "/images/shirt3.png",
     category: "fitness"
   } ,
    {
-    id: 15,
+    id: 20,
     name: "shirt Fitness",
     price: 9.99,
     imageUrl: "/images/shirt1.png",
     category: "fitness"
   } , 
   {
-    id: 15,
+    id: 21,
     name: "shoe nike",
     price: 694.99,
     imageUrl: "/images/shoe1.png",
     category: "fitness"
   } , 
    {
-    id: 15,
+    id: 22,
     name: "shoe adidas",
     price: 340.99,
     imageUrl: "/images/shoe2.png",
     category: "fitness"
   } , 
    {
-    id: 15,
+    id: 23,
     name: "shoe puma",
     price: 54.99,
     imageUrl: "/images/shoe3.png",
     category: "fitness"
   } , 
   {
-    id: 15,
+    id: 24,
     name: "shoe reebok",
     price: 5.99,
     imageUrl: "/images/shoe4.png",
     category: "fitness"
   } ,
    {
-    id: 15,
+    id: 25,
     name: "t-Shirt Classic",
     price: 2.99,
     imageUrl: "/images/t-shirt4.png",
     category: "fitness"
   } , 
    {
-    id: 15,
+    id: 26,
     name: "t-Shirt Fitness",
     price: 567.99,
     imageUrl: "/images/t-shirt3.png",
     category: "fitness"
   } , 
    {
-    id: 15,
+    id: 27,
     name: "t-Shirt Sport",
     price: 32.99,
     imageUrl: "/images/t-shirt2.png",
     category: "fitness"
   } , 
    {
-    id: 15,
+    id: 28,
     name: "t-Shirt Pro",
     price: 44.99,
     imageUrl: "/images/t-shirt1.png",

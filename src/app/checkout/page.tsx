@@ -43,10 +43,10 @@ export default function CheckoutPage() {
 
     if (cartItems.length === 0 && !orderComplete) {
         return (
-            <main className="p-8 max-w-2xl mx-auto">
-                <h1 className="text-3xl font-bold mb-6 text-black">Checkout</h1>
+            <main className="p-8 max-w-6xl mx-auto min-hieght-screen ">
+                <h1 className="text-3xl font-bold mb-6 text-black">Checkouts</h1>
                 <div className="bg-gray-50 rounded-lg p-8 text-center">
-                    <p className="text-gray-600 mb-4">Your cart is empty</p>
+                    <p className="text-gray-600 mb-4">Your cart isnow empty</p>
                     <button
                         onClick={() => router.push('/')}
                         className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
@@ -63,8 +63,7 @@ export default function CheckoutPage() {
             <main className="p-8 max-w-2xl mx-auto">
                 <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
                     <h2 className="text-2xl font-bold text-green-800 mb-4">Order Successful! 🎉</h2>
-                    <p className="text-gray-600 mb-4">Thank you for your purchase!</p>
-                    <p className="text-sm text-gray-500">Redirecting to home page...</p>
+                    <p className="text-gray-600 mb-4">Thank you for the perchase!</p>
                 </div>
             </main>
         );

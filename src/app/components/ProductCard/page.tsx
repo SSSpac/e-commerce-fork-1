@@ -30,11 +30,11 @@ export default function ProductCard({ id, name, price, imageUrl }: ProductCardPr
         alt={name}
         width={300}
         height={300}
-        className="w-full h-48 object-cover"
+        className="w-full h-50 object-cover"
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold mb-2">{name}</h3>
-        <p className="text-2xl font-bold text-green-600 mb-4">
+        <p className="text-2xl font-bold text-green-400 mb-3">
           ${price.toFixed(2)}
         </p>
         <button
@@ -43,7 +43,7 @@ export default function ProductCard({ id, name, price, imageUrl }: ProductCardPr
           className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
             isAdded
               ? "bg-green-600 text-white"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-blue-600 text-red-400 hover:bg-blue-700"
           }`}
         >
           {isAdded ? "Added!" : "Add to Cart"}

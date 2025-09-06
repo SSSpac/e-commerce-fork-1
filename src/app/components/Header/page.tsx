@@ -4,7 +4,7 @@ import SideBar from "../SideBar/page";
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-md p-4">
+    <header className="bg-blue-300 shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
