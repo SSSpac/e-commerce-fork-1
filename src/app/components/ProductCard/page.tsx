@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useCart } from "../Providers/CartProvider";
 
+
 interface Product {
   id: number;
   name: string;
@@ -11,8 +12,12 @@ interface Product {
   imageUrl: string;
 }
 
-export default function ProductCard(props: Product) {
-  const { id, name, price, imageUrl } = props;
+interface ProductCardProps {
+  product: Product;
+}
+
+export default function ProductCard({ product }: ProductCardProps) {
+  const { id, name, price, imageUrl } = product; 
   const [isAdded, setIsAdded] = useState(false);
   const { addToCart } = useCart();
 
