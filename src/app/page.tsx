@@ -1,4 +1,4 @@
-import ProductGrid from '../app/components/ProductGrid/page'; 
+import ProductGrid from './components/ProductGrid/ProductGrid'; 
 
 
 export default function HomePage() {

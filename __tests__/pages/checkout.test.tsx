@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import CheckoutPage from "../../src/app/checkout/page";
 import CartProvider from "../../src/app/components/Providers/CartProvider";
 import { products } from "../../src/app/data/page";
-import Header from "../../src/app/components/Header/page";
+import Header from "../../src/app/components/Header/Header";
 import HomePage from "@/app/page";
 
 jest.mock("next/navigation", () => ({ useRouter: () => ({ push: jest.fn() }) }));

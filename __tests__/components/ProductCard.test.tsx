@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import ProductCard from "../../src/app/components/ProductCard/page";
+import ProductCard from "../../src/app/components/ProductCard/ProductCard";
 import userEvent from "@testing-library/user-event";
 
 const mockAddToCart = jest.fn();

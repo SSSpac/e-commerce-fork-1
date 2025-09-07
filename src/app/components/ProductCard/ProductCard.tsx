@@ -3,14 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useCart } from "../Providers/CartProvider";
+import { Product } from "@/app/data/page";
 
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-}
 
 interface ProductCardProps {
   product: Product;

@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import SideBar from "../../src/app/components/SideBar/page";
+import SideBar from "../../src/app/components/SideBar/SideBar";
 import { useCart } from "../../src/app/components/Providers/CartProvider";
 
 jest.mock("../../src/app/components/Providers/CartProvider", () => ({

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { products } from '../../src/app/data/page';
-import ProductGrid from '../../src/app/components/ProductGrid/page';
+import ProductGrid from '../../src/app/components/ProductGrid/ProductGrid';
 
 jest.mock('../../src/app/components/ProductCard/page', () => {
   return function MockCard(props: any) {
