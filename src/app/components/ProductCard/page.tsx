@@ -11,9 +11,8 @@ interface Product {
   imageUrl: string;
 }
 
-interface ProductCardProps extends Product {}
 
-export default function ProductCard({ id, name, price, imageUrl }: ProductCardProps) {
+export default function ProductCard({ id, name, price, imageUrl }: Product) {
   const [isAdded, setIsAdded] = useState(false);
   const { addToCart } = useCart();
 

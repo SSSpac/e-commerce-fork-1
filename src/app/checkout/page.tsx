@@ -2,6 +2,7 @@
 import { useCart } from "../../app/components/Providers/CartProvider";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function CheckoutPage() {
     const { cartItems, cartTotal, clearCart } = useCart();
@@ -201,9 +202,11 @@ export default function CheckoutPage() {
                         <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
                             {cartItems.map((item, idx) => (
                                 <div key={`${item.name}-${idx}`} className="flex items-center gap-3 pb-3 border-b">
-                                    <img
+                                    <Image
                                         src={item.imageUrl}
                                         alt={item.name}
+                                        width={64}   
+    height={64}
                                         className="w-16 h-16 object-cover rounded"
                                     />
                                     <div className="flex-1">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCart } from "../Providers/CartProvider"; 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +46,7 @@ export default function SideBar() {
                 cartItems.map((item) => (
                   <div key={item.id} className="flex items-center justify-between py-2 border-b">
                     <div className="flex items-center space-x-3">
-                      <img src={item.imageUrl} alt={item.name} className="w-12 h-12 object-cover rounded" />
+                      <Image src={item.imageUrl} alt={item.name} className="w-12 h-12 object-cover rounded" width={48} height={48} />
                       <div>
                         <h3 className="font-medium">{item.name}</h3>
                         <p className="text-green-600">${item.price.toFixed(2)}</p>
